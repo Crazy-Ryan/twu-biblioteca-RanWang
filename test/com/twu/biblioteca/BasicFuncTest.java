@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,5 +26,14 @@ public class BasicFuncTest {
         String expectedOutput = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
         assertEquals(expectedOutput, outContent.toString());
     }
+
+    @Test
+    public void testViewingBookList() {
+        BookService bookService = new BookService();
+        String expectedOutput = "[Book{id=1, title='Pride and Prejudice'}, Book{id=2, title='Jane Eyre'}, Book{id=3, title='Gone With the Wind'}]";
+        List<Book> actualOutput = bookService.getBookData();
+        assertEquals(expectedOutput, actualOutput.toString());
+    }
+
 
 }
