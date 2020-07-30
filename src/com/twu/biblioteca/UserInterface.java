@@ -16,8 +16,9 @@ public class UserInterface {
 
     protected void viewBookList() {
         List<Book> bookData = bookService.getBookData();
-        for(Book book:bookData){
-            System.out.print(book.getTitle() + "\n");
+        System.out.print("Title\t| Author\t| Publication Year\n");
+        for (Book book : bookData) {
+            System.out.print(book.getTitle() + "\t| " + book.getAuthor() + "\t| " + book.getPublicationYear() + "\n");
         }
     }
 }

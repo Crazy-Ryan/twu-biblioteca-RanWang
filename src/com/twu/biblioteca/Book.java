@@ -5,10 +5,14 @@ import java.util.Objects;
 public class Book {
     private int id;
     private String title;
+    private String author;
+    private int publicationYear;
 
-    public Book(int id, String title) {
+    public Book(int id, String title, String author, int publicationYear) {
         this.id = id;
         this.title = title;
+        this.author = author;
+        this.publicationYear = publicationYear;
     }
 
     public int getId() {
@@ -27,6 +31,21 @@ public class Book {
         this.title = title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -46,6 +65,8 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", publicationYear=" + publicationYear +
                 '}';
     }
 }
