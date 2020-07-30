@@ -30,7 +30,9 @@ public class BasicFuncTest {
     @Test
     public void testViewingBookList() {
         BookService bookService = new BookService();
-        String expectedOutput = "[Book{id=1, title='Pride and Prejudice'}, Book{id=2, title='Jane Eyre'}, Book{id=3, title='Gone With the Wind'}]";
+        String expectedOutput = "[Book{id=1, title='Pride and Prejudice', author='Jane Austen', publicationYear=1813}, " +
+                "Book{id=2, title='Jane Eyre', author='Charlotte Brontë', publicationYear=1847}, " +
+                "Book{id=3, title='Gone With the Wind', author='Margaret Mitchell', publicationYear=1936}]";
         List<Book> actualOutput = bookService.getBookData();
         assertEquals(expectedOutput, actualOutput.toString());
     }
