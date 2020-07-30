@@ -3,6 +3,7 @@ package com.twu.biblioteca;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -37,5 +38,20 @@ public class BasicFuncTest {
         assertEquals(expectedOutput, actualOutput.toString());
     }
 
+    @Test
+    public void testOptionMenu() {
+        UserInterface userInterface = new UserInterface();
+        String expectedOutput = "Please select an option\n" +
+                "1. List of books\n"+
+                "Title\t| Author\t| Publication Year\n" +
+                "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
+                "Jane Eyre\t| Charlotte Brontë\t| 1847\n" +
+                "Gone With the Wind\t| Margaret Mitchell\t| 1936\n";
+        String str = "1";
+        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
+        System.setIn(strIn);
+        userInterface.selectOptionOnMenu();
+        assertEquals(expectedOutput, outContent.toString());
+    }
 
 }
