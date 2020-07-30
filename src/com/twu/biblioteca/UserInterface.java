@@ -8,5 +8,6 @@ public class UserInterface {
     }
 
     public void greet() {
+        System.out.print("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n");
     }
 }
