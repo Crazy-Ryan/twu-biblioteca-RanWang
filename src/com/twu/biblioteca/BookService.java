@@ -8,4 +8,12 @@ public class BookService {
     public List<Book> getBookData(){
         return bookRepo.getBookData();
     }
+
+    public List<Book> getAvailableBookData(){
+        return bookRepo.getAvailableBookData();
+    }
+
+    public boolean checkOutABook(String bookName){
+        return bookRepo.checkOutABook(bookName);
+    }
 }

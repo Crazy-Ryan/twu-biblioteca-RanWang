@@ -7,12 +7,14 @@ public class Book {
     private String title;
     private String author;
     private int publicationYear;
+    private boolean available;
 
-    public Book(int id, String title, String author, int publicationYear) {
+    public Book(int id, String title, String author, int publicationYear, boolean available) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
+        this.available = available;
     }
 
     public int getId() {
@@ -45,6 +47,14 @@ public class Book {
 
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     @Override

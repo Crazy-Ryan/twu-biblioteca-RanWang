@@ -19,8 +19,8 @@ public class UserInterface {
         System.out.print("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n");
     }
 
-    protected void viewBookList() {
-        List<Book> bookData = bookService.getBookData();
+    protected void viewAvailableBookList() {
+        List<Book> bookData = bookService.getAvailableBookData();
         System.out.print("Title\t| Author\t| Publication Year\n");
         for (Book book : bookData) {
             System.out.print(book.getTitle() + "\t| " + book.getAuthor() + "\t| " + book.getPublicationYear() + "\n");
@@ -30,6 +30,7 @@ public class UserInterface {
     protected void displayOptions(){
         System.out.print("Please select an option\n" +
                 "1. List of books\n" +
+                "2. Check out a book\n" +
                 "9. Quit\n");
     }
     protected void selectOptionOnMenu() {
@@ -37,7 +38,10 @@ public class UserInterface {
         int choice = scanner.nextInt();
         switch (choice) {
             case 1:
-                viewBookList();
+                viewAvailableBookList();
+                break;
+            case 2:
+                bookService.checkOutABook(collectBookName());
                 break;
             case 9:
                 quitFlag = true;
@@ -45,5 +49,11 @@ public class UserInterface {
             default:
                 System.out.print("Please select a valid option!\n");
         }
+    }
+
+    protected String collectBookName(){
+        System.out.println("Please enter the name of the book");
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
     }
 }

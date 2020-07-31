@@ -82,4 +82,18 @@ public class BasicFuncTest {
         userInterface.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
+
+//    @Test
+//    public void testCheckingOutABook() {
+//        UserInterface userInterface = new UserInterface();
+//        String expectedOutput = "Title\t| Author\t| Publication Year\n" +
+//                "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
+//                "Jane Eyre\t| Charlotte Brontë\t| 1847\n";
+//        String str = "1";
+//        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
+//        System.setIn(strIn);
+//        userInterface.checkOutABook("Gone With the Wind");
+//        userInterface.selectOptionOnMenu();
+//        assertEquals(expectedOutput, outContent.toString());
+//    }
 }
