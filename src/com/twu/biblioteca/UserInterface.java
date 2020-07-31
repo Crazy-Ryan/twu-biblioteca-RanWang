@@ -5,10 +5,13 @@ import java.util.Scanner;
 
 public class UserInterface {
     private BookService bookService = new BookService();
+    private boolean quitFlag = false;
 
     public void run() {
         greet();
-        selectOptionOnMenu();
+        while (!quitFlag) {
+            selectOptionOnMenu();
+        }
     }
 
     protected void greet() {
@@ -25,12 +28,16 @@ public class UserInterface {
 
     protected void selectOptionOnMenu() {
         System.out.print("Please select an option\n" +
-                "1. List of books\n");
+                "1. List of books\n" +
+                "9. Quit\n");
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
-        switch (choice){
+        switch (choice) {
             case 1:
                 viewBookList();
+                break;
+            case 9:
+                quitFlag = true;
                 break;
             default:
                 System.out.print("Please select a valid option!\n");
