@@ -66,7 +66,9 @@ public class UserInterface {
     }
     protected void returnABook(){
         String bookName = collectBookName();
-        bookService.returnABook(bookName);
+        if(bookService.returnABook(bookName)){
+            System.out.print("Thank you for returning the book\n");
+        }
     }
 
     protected String collectBookName(){
