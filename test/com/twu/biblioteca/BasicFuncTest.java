@@ -39,11 +39,18 @@ public class BasicFuncTest {
     }
 
     @Test
-    public void testOptionMenu() {
+    public void testDisplayingOptionMenu() {
         UserInterface userInterface = new UserInterface();
         String expectedOutput = "Please select an option\n" +
-                "1. List of books\n"+
-                "Title\t| Author\t| Publication Year\n" +
+                "1. List of books\n";
+        userInterface.displayOptions();
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    public void testOptionMenu() {
+        UserInterface userInterface = new UserInterface();
+        String expectedOutput = "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
                 "Jane Eyre\t| Charlotte Brontë\t| 1847\n" +
                 "Gone With the Wind\t| Margaret Mitchell\t| 1936\n";
@@ -53,11 +60,12 @@ public class BasicFuncTest {
         userInterface.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
+
     @Test
     public void testInvalidOptionMenu() {
         UserInterface userInterface = new UserInterface();
         String expectedOutput = "Please select an option\n" +
-                "1. List of books\n"+
+                "1. List of books\n" +
                 "Please select a valid option!\n";
         String str = "0";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
@@ -65,11 +73,12 @@ public class BasicFuncTest {
         userInterface.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
+
     @Test
     public void testQuittingTheApplication() {
         UserInterface userInterface = new UserInterface();
         String expectedOutput = "Please select an option\n" +
-                "1. List of books\n"+
+                "1. List of books\n" +
                 "9. Quit\n";
         String str = "9";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
