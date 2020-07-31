@@ -10,6 +10,7 @@ public class UserInterface {
     public void run() {
         greet();
         while (!quitFlag) {
+            displayOptions();
             selectOptionOnMenu();
         }
     }
@@ -26,10 +27,12 @@ public class UserInterface {
         }
     }
 
-    protected void selectOptionOnMenu() {
+    protected void displayOptions(){
         System.out.print("Please select an option\n" +
                 "1. List of books\n" +
                 "9. Quit\n");
+    }
+    protected void selectOptionOnMenu() {
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         switch (choice) {
