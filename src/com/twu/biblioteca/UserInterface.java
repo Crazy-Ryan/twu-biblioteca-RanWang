@@ -41,7 +41,7 @@ public class UserInterface {
                 viewAvailableBookList();
                 break;
             case 2:
-                bookService.checkOutABook(collectBookName());
+                checkOutABook();
                 break;
             case 9:
                 quitFlag = true;
@@ -51,8 +51,15 @@ public class UserInterface {
         }
     }
 
+    protected void checkOutABook(){
+        String bookName = collectBookName();
+        if(bookService.checkOutABook(bookName)){
+            System.out.print("Thank you! Enjoy the book\n");
+        }
+    }
+
     protected String collectBookName(){
-        System.out.println("Please enter the name of the book");
+        System.out.print("Please enter the name of the book\n");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
