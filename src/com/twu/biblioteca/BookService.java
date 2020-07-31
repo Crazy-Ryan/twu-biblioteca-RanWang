@@ -16,4 +16,8 @@ public class BookService {
     public boolean checkOutABook(String bookName){
         return bookRepo.checkOutABook(bookName);
     }
+
+    public boolean returnABook(String bookName){
+        return bookRepo.returnABook(bookName);
+    }
 }

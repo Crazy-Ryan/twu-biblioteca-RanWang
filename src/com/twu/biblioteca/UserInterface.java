@@ -31,6 +31,7 @@ public class UserInterface {
         System.out.print("Please select an option\n" +
                 "1. List of books\n" +
                 "2. Check out a book\n" +
+                "3. Return a book\n" +
                 "9. Quit\n");
     }
     protected void selectOptionOnMenu() {
@@ -42,6 +43,9 @@ public class UserInterface {
                 break;
             case 2:
                 checkOutABook();
+                break;
+                case 3:
+                returnABook();
                 break;
             case 9:
                 quitFlag = true;
@@ -60,7 +64,10 @@ public class UserInterface {
             System.out.print("Sorry, that book is not available\n");
         }
     }
-
+    protected void returnABook(){
+        String bookName = collectBookName();
+        bookService.returnABook(bookName);
+    }
 
     protected String collectBookName(){
         System.out.print("Please enter the name of the book\n");

@@ -33,4 +33,13 @@ public class BookRepo {
         }
         return false;
     }
+    public boolean returnABook(String bookName) {
+        for (Book book : bookData) {
+            if ((!book.isAvailable()) && (book.getTitle().equals(bookName))) {
+                book.setAvailable(true);
+                return true;
+            }
+        }
+        return false;
+    }
 }
