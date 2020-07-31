@@ -64,9 +64,7 @@ public class BasicFuncTest {
     @Test
     public void testInvalidOptionMenu() {
         UserInterface userInterface = new UserInterface();
-        String expectedOutput = "Please select an option\n" +
-                "1. List of books\n" +
-                "Please select a valid option!\n";
+        String expectedOutput = "Please select a valid option!\n";
         String str = "0";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);
