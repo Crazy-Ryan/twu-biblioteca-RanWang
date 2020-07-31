@@ -65,4 +65,16 @@ public class BasicFuncTest {
         userInterface.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
+    @Test
+    public void testQuittingTheApplication() {
+        UserInterface userInterface = new UserInterface();
+        String expectedOutput = "Please select an option\n" +
+                "1. List of books\n"+
+                "9. Quit\n";
+        String str = "9";
+        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
+        System.setIn(strIn);
+        userInterface.selectOptionOnMenu();
+        assertEquals(expectedOutput, outContent.toString());
+    }
 }
