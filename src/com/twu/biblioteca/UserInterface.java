@@ -69,6 +69,9 @@ public class UserInterface {
         if(bookService.returnABook(bookName)){
             System.out.print("Thank you for returning the book\n");
         }
+        else {
+            System.out.print("That is not a valid book to return\n");
+        }
     }
 
     protected String collectBookName(){
