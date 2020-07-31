@@ -53,5 +53,16 @@ public class BasicFuncTest {
         userInterface.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
-
+    @Test
+    public void testInvalidOptionMenu() {
+        UserInterface userInterface = new UserInterface();
+        String expectedOutput = "Please select an option\n" +
+                "1. List of books\n"+
+                "Please select a valid option!\n";
+        String str = "0";
+        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
+        System.setIn(strIn);
+        userInterface.selectOptionOnMenu();
+        assertEquals(expectedOutput, outContent.toString());
+    }
 }
