@@ -75,9 +75,7 @@ public class BasicFuncTest {
     @Test
     public void testQuittingTheApplication() {
         UserInterface userInterface = new UserInterface();
-        String expectedOutput = "Please select an option\n" +
-                "1. List of books\n" +
-                "9. Quit\n";
+        String expectedOutput = "";
         String str = "9";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);
