@@ -33,7 +33,7 @@ public class UserInterface {
                 viewBookList();
                 break;
             default:
-                System.out.println("unavailable");
+                System.out.print("Please select a valid option!\n");
         }
     }
 }
