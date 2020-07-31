@@ -56,7 +56,11 @@ public class UserInterface {
         if(bookService.checkOutABook(bookName)){
             System.out.print("Thank you! Enjoy the book\n");
         }
+        else {
+            System.out.print("Sorry, that book is not available\n");
+        }
     }
+
 
     protected String collectBookName(){
         System.out.print("Please enter the name of the book\n");
