@@ -22,8 +22,8 @@ public class BasicFuncTest {
 
     @Test
     public void testGreeting() {
-        UserInterface userInterface = new UserInterface();
-        userInterface.greet();
+        Biblioteca biblioteca = new Biblioteca();
+        biblioteca.greet();
         String expectedOutput = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -34,22 +34,22 @@ public class BasicFuncTest {
         String expectedOutput = "[Book{id=1, title='Pride and Prejudice', author='Jane Austen', publicationYear=1813}, " +
                 "Book{id=2, title='Jane Eyre', author='Charlotte Brontë', publicationYear=1847}, " +
                 "Book{id=3, title='Gone With the Wind', author='Margaret Mitchell', publicationYear=1936}]";
-        List<Book> actualOutput = bookService.getBookData();
+        List<Book> actualOutput = bookService.getBooks();
         assertEquals(expectedOutput, actualOutput.toString());
     }
 
     @Test
     public void testDisplayingOptionMenu() {
-        UserInterface userInterface = new UserInterface();
+        Biblioteca biblioteca = new Biblioteca();
         String expectedOutput = "Please select an option\n" +
                 "1. List of books\n";
-        userInterface.displayOptions();
+        biblioteca.displayOptions();
         assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
     public void testOptionMenu() {
-        UserInterface userInterface = new UserInterface();
+        Biblioteca biblioteca = new Biblioteca();
         String expectedOutput = "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
                 "Jane Eyre\t| Charlotte Brontë\t| 1847\n" +
@@ -57,29 +57,29 @@ public class BasicFuncTest {
         String str = "1";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);
-        userInterface.selectOptionOnMenu();
+        biblioteca.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
     public void testInvalidOptionMenu() {
-        UserInterface userInterface = new UserInterface();
+        Biblioteca biblioteca = new Biblioteca();
         String expectedOutput = "Please select a valid option!\n";
         String str = "0";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);
-        userInterface.selectOptionOnMenu();
+        biblioteca.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
     public void testQuittingTheApplication() {
-        UserInterface userInterface = new UserInterface();
+        Biblioteca biblioteca = new Biblioteca();
         String expectedOutput = "";
         String str = "9";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);
-        userInterface.selectOptionOnMenu();
+        biblioteca.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
 

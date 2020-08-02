@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
-public class UserInterface {
+public class Biblioteca {
     private final BookService bookService = new BookService();
     private Map<Option, Integer> OPTION_NUMBER_MAP;
     private Map<Integer, Option> NUMBER_OPTION_MAP;
@@ -70,7 +70,7 @@ public class UserInterface {
     }
 
     protected boolean listBookHandler() {
-        List<Book> bookData = bookService.getAvailableBookData();
+        List<Book> bookData = bookService.getAvailableBooks();
         System.out.print("Title\t| Author\t| Publication Year\n");
         for (Book book : bookData) {
             System.out.print(book.getTitle() + "\t| " + book.getAuthor() + "\t| " + book.getPublicationYear() + "\n");
