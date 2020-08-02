@@ -58,4 +58,18 @@ public class BibliotecaTest {
         biblioteca.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
+
+    @Test
+    public void successfullyCheckOutBookHandlerTest() {
+        String expectedOutput = "Please enter the name of the book\n" +
+                "Thank you! Enjoy the book\n" +
+                "Title\t| Author\t| Publication Year\n" +
+                "Pride and Prejudice\t| Jane Austen\t| 1813\n";
+        String str = "Gone With the Wind\n";
+        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
+        System.setIn(strIn);
+        biblioteca.checkOutBookHandler();
+        biblioteca.listBookHandler();
+        assertEquals(expectedOutput, outContent.toString());
+    }
 }
