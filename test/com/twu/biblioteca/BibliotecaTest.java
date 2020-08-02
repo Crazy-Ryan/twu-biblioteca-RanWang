@@ -88,4 +88,19 @@ public class BibliotecaTest {
         assertEquals(expectedOutput, outContent.toString());
     }
 
+    @Test
+    public void successfullyReturnBookHandlerTest() {
+        String expectedOutput = "Please enter the name of the book\n" +
+                "Thank you for returning the book\n" +
+                "Title\t| Author\t| Publication Year\n" +
+                "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
+                "Jane Eyre\t| Charlotte Brontë\t| 1847\n" +
+                "Gone With the Wind\t| Margaret Mitchell\t| 1936\n";
+        String str = "Jane Eyre\n";
+        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
+        System.setIn(strIn);
+        biblioteca.returnBookHandler();
+        biblioteca.listBookHandler();
+        assertEquals(expectedOutput, outContent.toString());
+    }
 }
