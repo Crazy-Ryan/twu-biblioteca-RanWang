@@ -47,11 +47,7 @@ public class BibliotecaTest {
 
     @Test
     public void quitHandlerTest() {
-        String expectedOutput = "Please select an option\n" +
-                "1. List of books\n" +
-                "2. Check out a book\n" +
-                "3. Return a book\n" +
-                "9. Quit\n";
+        String expectedOutput = "";
         String str = "9";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);

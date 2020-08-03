@@ -16,7 +16,11 @@ public class Biblioteca {
     public void run() {
         init();
         greet();
-        selectOptionOnMenu();
+        boolean exitAfterOptionHanding = false;
+        while (!exitAfterOptionHanding) {
+            displayOptions();
+            exitAfterOptionHanding = selectOptionOnMenu();
+        }
     }
 
     public void init() {
@@ -55,18 +59,14 @@ public class Biblioteca {
                 OPTION_NUMBER_MAP.get(Option.QUIT) + ". Quit\n");
     }
 
-    protected void selectOptionOnMenu() {
-        boolean exitAfterOptionHanding = false;
-        while (!exitAfterOptionHanding) {
-            displayOptions();
-            Scanner scanner = new Scanner(System.in);
-            int choice = scanner.nextInt();
-            Supplier<Boolean> optionHandler = OPTION_HANDLER_MAP.get(NUMBER_OPTION_MAP.get(choice));
-            if (null == optionHandler) {
-                optionHandler = this::invalidOptionHandler;
-            }
-            exitAfterOptionHanding = optionHandler.get();
+    protected boolean selectOptionOnMenu() {
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+        Supplier<Boolean> optionHandler = OPTION_HANDLER_MAP.get(NUMBER_OPTION_MAP.get(choice));
+        if (null == optionHandler) {
+            optionHandler = this::invalidOptionHandler;
         }
+        return optionHandler.get();
     }
 
     protected boolean listBookHandler() {
