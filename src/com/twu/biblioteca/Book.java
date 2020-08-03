@@ -2,35 +2,14 @@ package com.twu.biblioteca;
 
 import java.util.Objects;
 
-public class Book {
-    private int id;
-    private String title;
+public class Book extends Medium{
     private String author;
     private int publicationYear;
-    private boolean available;
 
     public Book(int id, String title, String author, int publicationYear, boolean available) {
-        this.id = id;
-        this.title = title;
+        super(id, title, available);
         this.author = author;
         this.publicationYear = publicationYear;
-        this.available = available;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getAuthor() {
@@ -49,34 +28,14 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return id == book.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+                "id=" + this.getId() +
+                ", title='" + this.getTitle() + '\'' +
                 ", author='" + author + '\'' +
                 ", publicationYear=" + publicationYear +
                 '}';
     }
+
 }
