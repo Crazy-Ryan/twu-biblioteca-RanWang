@@ -73,7 +73,12 @@ public class Biblioteca {
 
     public boolean selectOptionOnMenu() {
         Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        int choice;
+        try {
+            choice = scanner.nextInt();
+        }catch (RuntimeException e){
+            return invalidOptionHandler();
+        }
         Supplier<Boolean> optionHandler = OPTION_HANDLER_MAP.get(NUMBER_OPTION_MAP.get(choice));
         if (null == optionHandler) {
             optionHandler = this::invalidOptionHandler;
@@ -144,4 +149,6 @@ public class Biblioteca {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
+
+
 }
