@@ -1,6 +1,5 @@
 package com.twu.biblioteca.userInterface;
 
-import com.twu.biblioteca.userInterface.Biblioteca;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -113,6 +112,15 @@ public class BibliotecaTest {
         System.setIn(strIn);
         biblioteca.returnBookHandler();
         biblioteca.listBookHandler();
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    public void listMovieHandlerTest() {
+        String expectedOutput = "Title\t| Year\t| Director\t| Rating\n" +
+                "The Godfather\t| 1972\t| Francis Ford Coppola\t| 9.2\n" +
+                "12 Angry Men\t| 1957\t| Sidney Lumet\t| 8.9\n";
+        biblioteca.listMovieHandler();
         assertEquals(expectedOutput, outContent.toString());
     }
 }

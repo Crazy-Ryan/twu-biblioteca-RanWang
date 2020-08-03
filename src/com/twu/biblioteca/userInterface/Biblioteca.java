@@ -1,7 +1,9 @@
 package com.twu.biblioteca.userInterface;
 
 import com.twu.biblioteca.entity.Book;
+import com.twu.biblioteca.entity.Movie;
 import com.twu.biblioteca.service.BookService;
+import com.twu.biblioteca.service.MovieService;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import java.util.function.Supplier;
 
 public class Biblioteca {
     private final BookService bookService = new BookService();
+    private final MovieService movieService = new MovieService();
     private Map<Option, Integer> OPTION_NUMBER_MAP;
     private Map<Integer, Option> NUMBER_OPTION_MAP;
     private Map<Option, Supplier<Boolean>> OPTION_HANDLER_MAP;
@@ -34,6 +37,7 @@ public class Biblioteca {
         optionNumberMap.put(Option.LIST_BOOK, 1);
         optionNumberMap.put(Option.CHECKOUT_BOOK, 2);
         optionNumberMap.put(Option.RETURN_BOOK, 3);
+        optionNumberMap.put(Option.LIST_MOVIE, 4);
         optionNumberMap.put(Option.QUIT, 9);
 
         for (Option option : Option.values()) {
@@ -43,6 +47,7 @@ public class Biblioteca {
         optionHandlerMap.put(Option.LIST_BOOK, this::listBookHandler);
         optionHandlerMap.put(Option.CHECKOUT_BOOK, this::checkOutBookHandler);
         optionHandlerMap.put(Option.RETURN_BOOK, this::returnBookHandler);
+        optionHandlerMap.put(Option.LIST_MOVIE, this::listMovieHandler);
         optionHandlerMap.put(Option.QUIT, this::quitHandler);
 
         OPTION_NUMBER_MAP = Collections.unmodifiableMap(optionNumberMap);
@@ -56,9 +61,10 @@ public class Biblioteca {
 
     public void displayOptions() {
         System.out.print("Please select an option\n" +
-                OPTION_NUMBER_MAP.get(Option.LIST_BOOK) + ". List of books\n" +
+                OPTION_NUMBER_MAP.get(Option.LIST_BOOK) + ". List available books\n" +
                 OPTION_NUMBER_MAP.get(Option.CHECKOUT_BOOK) + ". Check out a book\n" +
                 OPTION_NUMBER_MAP.get(Option.RETURN_BOOK) + ". Return a book\n" +
+                OPTION_NUMBER_MAP.get(Option.LIST_MOVIE) + ". List available movies\n" +
                 OPTION_NUMBER_MAP.get(Option.QUIT) + ". Quit\n");
     }
 
@@ -79,8 +85,8 @@ public class Biblioteca {
             System.out.print(book.getTitle() + "\t| " + book.getAuthor() + "\t| " + book.getPublicationYear() + "\n");
         }
         return false;
-    }
 
+    }
     public boolean checkOutBookHandler() {
         String bookName = collectBookName();
         if (bookService.checkOutABook(bookName)) {
@@ -90,13 +96,21 @@ public class Biblioteca {
         }
         return false;
     }
-
     public boolean returnBookHandler() {
         String bookName = collectBookName();
         if (bookService.returnABook(bookName)) {
             System.out.print("Thank you for returning the book\n");
         } else {
             System.out.print("That is not a valid book to return\n");
+        }
+        return false;
+    }
+
+    public boolean listMovieHandler() {
+        List<Movie> movies = movieService.getAvailableMovies();
+        System.out.print("Title\t| Year\t| Director\t| Rating\n");
+        for (Movie movie : movies) {
+            System.out.print(movie.getTitle() + "\t| " + movie.getReleaseYear() + "\t| " + movie.getDirector() +  "\t| " + movie.getRating() +"\n");
         }
         return false;
     }
