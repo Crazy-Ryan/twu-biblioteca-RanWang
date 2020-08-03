@@ -57,7 +57,7 @@ public class BibliotecaTest {
 
     @Test
     public void successfullyCheckOutBookHandlerTest() {
-        String expectedOutput = "Please enter the name of the book\n" +
+        String expectedOutput = "Please enter the title\n" +
                 "Thank you! Enjoy the book\n" +
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n";
@@ -71,7 +71,7 @@ public class BibliotecaTest {
 
     @Test
     public void unsuccessfullyCheckOutBookHandlerTest() {
-        String expectedOutput = "Please enter the name of the book\n" +
+        String expectedOutput = "Please enter the title\n" +
                 "Sorry, that book is not available\n" +
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
@@ -86,7 +86,7 @@ public class BibliotecaTest {
 
     @Test
     public void successfullyReturnBookHandlerTest() {
-        String expectedOutput = "Please enter the name of the book\n" +
+        String expectedOutput = "Please enter the title\n" +
                 "Thank you for returning the book\n" +
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
@@ -102,7 +102,7 @@ public class BibliotecaTest {
 
     @Test
     public void unsuccessfullyReturnBookHandlerTest() {
-        String expectedOutput = "Please enter the name of the book\n" +
+        String expectedOutput = "Please enter the title\n" +
                 "That is not a valid book to return\n" +
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
@@ -120,6 +120,20 @@ public class BibliotecaTest {
         String expectedOutput = "Title\t| Year\t| Director\t| Rating\n" +
                 "The Godfather\t| 1972\t| Francis Ford Coppola\t| 9.2\n" +
                 "12 Angry Men\t| 1957\t| Sidney Lumet\t| 8.9\n";
+        biblioteca.listMovieHandler();
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    public void successfullyCheckOutMovieHandlerTest() {
+        String expectedOutput = "Please enter the title\n" +
+                "Thank you! Enjoy the movie\n" +
+                "Title\t| Year\t| Director\t| Rating\n" +
+                "The Godfather\t| 1972\t| Francis Ford Coppola\t| 9.2\n";
+        String str = "12 Angry Men\n";
+        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
+        System.setIn(strIn);
+        biblioteca.checkoutMovieHandler();
         biblioteca.listMovieHandler();
         assertEquals(expectedOutput, outContent.toString());
     }

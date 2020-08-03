@@ -38,6 +38,7 @@ public class Biblioteca {
         optionNumberMap.put(Option.CHECKOUT_BOOK, 2);
         optionNumberMap.put(Option.RETURN_BOOK, 3);
         optionNumberMap.put(Option.LIST_MOVIE, 4);
+        optionNumberMap.put(Option.CHECKOUT_MOVIE, 5);
         optionNumberMap.put(Option.QUIT, 9);
 
         for (Option option : Option.values()) {
@@ -48,6 +49,7 @@ public class Biblioteca {
         optionHandlerMap.put(Option.CHECKOUT_BOOK, this::checkOutBookHandler);
         optionHandlerMap.put(Option.RETURN_BOOK, this::returnBookHandler);
         optionHandlerMap.put(Option.LIST_MOVIE, this::listMovieHandler);
+        optionHandlerMap.put(Option.CHECKOUT_MOVIE, this::checkoutMovieHandler);
         optionHandlerMap.put(Option.QUIT, this::quitHandler);
 
         OPTION_NUMBER_MAP = Collections.unmodifiableMap(optionNumberMap);
@@ -65,6 +67,7 @@ public class Biblioteca {
                 OPTION_NUMBER_MAP.get(Option.CHECKOUT_BOOK) + ". Check out a book\n" +
                 OPTION_NUMBER_MAP.get(Option.RETURN_BOOK) + ". Return a book\n" +
                 OPTION_NUMBER_MAP.get(Option.LIST_MOVIE) + ". List available movies\n" +
+                OPTION_NUMBER_MAP.get(Option.CHECKOUT_MOVIE) + ". Check out a movie\n" +
                 OPTION_NUMBER_MAP.get(Option.QUIT) + ". Quit\n");
     }
 
@@ -87,8 +90,9 @@ public class Biblioteca {
         return false;
 
     }
+
     public boolean checkOutBookHandler() {
-        String bookName = collectBookName();
+        String bookName = collectTitle();
         if (bookService.checkOutABook(bookName)) {
             System.out.print("Thank you! Enjoy the book\n");
         } else {
@@ -96,8 +100,9 @@ public class Biblioteca {
         }
         return false;
     }
+
     public boolean returnBookHandler() {
-        String bookName = collectBookName();
+        String bookName = collectTitle();
         if (bookService.returnABook(bookName)) {
             System.out.print("Thank you for returning the book\n");
         } else {
@@ -115,6 +120,16 @@ public class Biblioteca {
         return false;
     }
 
+    public boolean checkoutMovieHandler() {
+        String movieName = collectTitle();
+        if (movieService.checkOutAMovie(movieName)) {
+            System.out.print("Thank you! Enjoy the movie\n");
+        } else {
+            System.out.print("Sorry, that movie is not available\n");
+        }
+        return false;
+    }
+
     public boolean quitHandler() {
         return true;
     }
@@ -124,8 +139,8 @@ public class Biblioteca {
         return false;
     }
 
-    public String collectBookName() {
-        System.out.print("Please enter the name of the book\n");
+    public String collectTitle() {
+        System.out.print("Please enter the title\n");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }

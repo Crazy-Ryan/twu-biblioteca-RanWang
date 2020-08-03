@@ -5,5 +5,6 @@ public enum Option {
     CHECKOUT_BOOK,
     RETURN_BOOK,
     LIST_MOVIE,
+    CHECKOUT_MOVIE,
     QUIT
 }
