@@ -1,6 +1,4 @@
-package com.twu.biblioteca;
-
-import java.util.Objects;
+package com.twu.biblioteca.entity;
 
 public class Book extends Medium{
     private String author;

@@ -1,11 +1,13 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.repo;
+
+import com.twu.biblioteca.entity.Book;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BookRepo {
+public class BookRepo implements MediumRepo<Book> {
     private final List<Book> books;
 
     public BookRepo() {
@@ -16,15 +18,18 @@ public class BookRepo {
         ));
     }
 
-    public List<Book> getBooks() {
+    @Override
+    public List<Book> getMedia() {
         return books;
     }
 
-    public List<Book> getAvailableBooks() {
+    @Override
+    public List<Book> getAvailableMedia() {
         return books.stream().filter(Book::isAvailable).collect(Collectors.toList());
     }
 
-    public boolean checkOutABook(String bookName) {
+    @Override
+    public boolean checkoutMedium(String bookName) {
         for (Book book : books) {
             if ((book.isAvailable()) && (book.getTitle().equals(bookName))) {
                 book.setAvailable(false);
@@ -34,7 +39,8 @@ public class BookRepo {
         return false;
     }
 
-    public boolean returnABook(String bookName) {
+    @Override
+    public boolean returnMedium(String bookName) {
         for (Book book : books) {
             if ((!book.isAvailable()) && (book.getTitle().equals(bookName))) {
                 book.setAvailable(true);

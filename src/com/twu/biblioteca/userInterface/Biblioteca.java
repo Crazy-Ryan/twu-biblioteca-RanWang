@@ -1,4 +1,7 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.userInterface;
+
+import com.twu.biblioteca.entity.Book;
+import com.twu.biblioteca.service.BookService;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,11 +50,11 @@ public class Biblioteca {
         OPTION_HANDLER_MAP = Collections.unmodifiableMap(optionHandlerMap);
     }
 
-    protected void greet() {
+    public void greet() {
         System.out.print("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n");
     }
 
-    protected void displayOptions() {
+    public void displayOptions() {
         System.out.print("Please select an option\n" +
                 OPTION_NUMBER_MAP.get(Option.LIST_BOOK) + ". List of books\n" +
                 OPTION_NUMBER_MAP.get(Option.CHECKOUT_BOOK) + ". Check out a book\n" +
@@ -59,7 +62,7 @@ public class Biblioteca {
                 OPTION_NUMBER_MAP.get(Option.QUIT) + ". Quit\n");
     }
 
-    protected boolean selectOptionOnMenu() {
+    public boolean selectOptionOnMenu() {
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         Supplier<Boolean> optionHandler = OPTION_HANDLER_MAP.get(NUMBER_OPTION_MAP.get(choice));
@@ -69,7 +72,7 @@ public class Biblioteca {
         return optionHandler.get();
     }
 
-    protected boolean listBookHandler() {
+    public boolean listBookHandler() {
         List<Book> bookData = bookService.getAvailableBooks();
         System.out.print("Title\t| Author\t| Publication Year\n");
         for (Book book : bookData) {
@@ -78,7 +81,7 @@ public class Biblioteca {
         return false;
     }
 
-    protected boolean checkOutBookHandler() {
+    public boolean checkOutBookHandler() {
         String bookName = collectBookName();
         if (bookService.checkOutABook(bookName)) {
             System.out.print("Thank you! Enjoy the book\n");
@@ -88,7 +91,7 @@ public class Biblioteca {
         return false;
     }
 
-    protected boolean returnBookHandler() {
+    public boolean returnBookHandler() {
         String bookName = collectBookName();
         if (bookService.returnABook(bookName)) {
             System.out.print("Thank you for returning the book\n");
@@ -98,16 +101,16 @@ public class Biblioteca {
         return false;
     }
 
-    protected boolean quitHandler() {
+    public boolean quitHandler() {
         return true;
     }
 
-    protected boolean invalidOptionHandler() {
+    public boolean invalidOptionHandler() {
         System.out.print("Please select a valid option!\n");
         return false;
     }
 
-    protected String collectBookName() {
+    public String collectBookName() {
         System.out.print("Please enter the name of the book\n");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();

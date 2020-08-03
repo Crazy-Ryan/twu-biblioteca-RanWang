@@ -1,4 +1,4 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.userInterface;
 
 public enum Option {
     LIST_BOOK,
