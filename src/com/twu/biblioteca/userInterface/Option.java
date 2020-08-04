@@ -7,5 +7,6 @@ public enum Option {
     RETURN_BOOK,
     LIST_MOVIE,
     CHECKOUT_MOVIE,
+    VIEW_PROFILE,
     QUIT
 }

@@ -12,17 +12,17 @@ public class AccountRepo {
 
     public AccountRepo() {
         accounts = new ArrayList(Arrays.asList(
-                new Account(1234567, "Jack", "password"),
-                new Account(2345678, "Ross", "passcode")
+                new Account(1234567, "Jack", "password","jack@tw.com","+86-111"),
+                new Account(2345678, "Ross", "passcode","ross@tw.com","+86-222")
         ));
     }
 
-    public boolean userLogin(int number, String password) {
+    public Account userLogin(int number, String password) {
         for (Account account : accounts) {
             if (number == account.getNumber() && password.equals(account.getPassword())) {
-                return true;
+                return account;
             }
         }
-        return false;
+        return new Account();
     }
 }

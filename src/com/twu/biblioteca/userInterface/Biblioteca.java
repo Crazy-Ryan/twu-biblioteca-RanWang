@@ -1,5 +1,6 @@
 package com.twu.biblioteca.userInterface;
 
+import com.twu.biblioteca.entity.Account;
 import com.twu.biblioteca.entity.Book;
 import com.twu.biblioteca.entity.Movie;
 import com.twu.biblioteca.service.AccountService;
@@ -23,7 +24,7 @@ public class Biblioteca {
     private Map<Integer, Option> NUMBER_OPTION_MAP;
     private Map<Option, Supplier<Boolean>> OPTION_HANDLER_MAP;
     private boolean userLoggedIn = false;
-    private int userNumber = -1;
+    private Account userAccount;
 
     public void run() {
         init();
@@ -46,6 +47,7 @@ public class Biblioteca {
         optionNumberMap.put(Option.RETURN_BOOK, 3);
         optionNumberMap.put(Option.LIST_MOVIE, 4);
         optionNumberMap.put(Option.CHECKOUT_MOVIE, 5);
+        optionNumberMap.put(Option.VIEW_PROFILE, 6);
         optionNumberMap.put(Option.QUIT, 9);
 
         for (Option option : Option.values()) {
@@ -58,6 +60,7 @@ public class Biblioteca {
         optionHandlerMap.put(Option.RETURN_BOOK, this::returnBookHandler);
         optionHandlerMap.put(Option.LIST_MOVIE, this::listMovieHandler);
         optionHandlerMap.put(Option.CHECKOUT_MOVIE, this::checkoutMovieHandler);
+        optionHandlerMap.put(Option.VIEW_PROFILE, this::viewProfileHandler);
         optionHandlerMap.put(Option.QUIT, this::quitHandler);
 
         OPTION_NUMBER_MAP = Collections.unmodifiableMap(optionNumberMap);
@@ -77,6 +80,7 @@ public class Biblioteca {
                 OPTION_NUMBER_MAP.get(Option.RETURN_BOOK) + ". Return a book\n" +
                 OPTION_NUMBER_MAP.get(Option.LIST_MOVIE) + ". List available movies\n" +
                 OPTION_NUMBER_MAP.get(Option.CHECKOUT_MOVIE) + ". Check out a movie\n" +
+                OPTION_NUMBER_MAP.get(Option.VIEW_PROFILE) + ". View my profile\n" +
                 OPTION_NUMBER_MAP.get(Option.QUIT) + ". Quit\n");
     }
 
@@ -111,7 +115,7 @@ public class Biblioteca {
         checkLoginStatus();
         System.out.print("Please enter the title\n");
         String bookName = collectALine();
-        if (bookService.checkOutABook(bookName, userNumber)) {
+        if (bookService.checkOutABook(bookName, userAccount.getNumber())) {
             System.out.print("Thank you! Enjoy the book\n");
         } else {
             System.out.print("Sorry, that book is not available\n");
@@ -123,7 +127,7 @@ public class Biblioteca {
         checkLoginStatus();
         System.out.print("Please enter the title\n");
         String bookName = collectALine();
-        if (bookService.returnABook(bookName, userNumber)) {
+        if (bookService.returnABook(bookName, userAccount.getNumber())) {
             System.out.print("Thank you for returning the book\n");
         } else {
             System.out.print("That is not a valid book to return\n");
@@ -164,7 +168,8 @@ public class Biblioteca {
         if (scanner == null) {
             scanner = new Scanner(System.in);
         }
-        return scanner.nextLine();
+        String input = scanner.nextLine();
+        return input.equals("")? scanner.nextLine() : input;
     }
 
     public void checkLoginStatus() {
@@ -176,19 +181,32 @@ public class Biblioteca {
 
     public boolean userLogInHandler() {
         int userNumberCollected;
+        Account accountReceived;
         do {
             System.out.print("Please enter your user number (xxx-xxxx):\n");
             String userNumberEntered = collectALine();
             userNumberCollected = Integer.parseInt(userNumberEntered.replaceFirst("-", ""));
             System.out.print("Please enter your password:\n");
             String userPasswordEntered = collectALine();
-            userLoggedIn = accountService.userLogin(userNumberCollected, userPasswordEntered);
-            if (!userLoggedIn) {
-                System.out.print("Login failed. Please try again\n");
+            accountReceived = accountService.userLogin(userNumberCollected, userPasswordEntered);
+            if (accountReceived.getNumber() != 0) {
+                System.out.print("Login successfully. Welcome!\n");
+                userAccount = accountReceived;
+                userLoggedIn = true;
+                break;
             }
-        } while (!userLoggedIn);
-        System.out.print("Login successfully. Welcome!\n");
-        userNumber = userNumberCollected;
+            System.out.print("Login failed. Please try again\n");
+        } while (true);
+        return false;
+    }
+
+    public boolean viewProfileHandler() {
+        checkLoginStatus();
+        System.out.print("Your profile is as below:\n" +
+                "Number: " + userAccount.getNumber() + "\n" +
+                "Name: " + userAccount.getName() + "\n" +
+                "Email: " + userAccount.getEmail() + "\n" +
+                "Phone number: " + userAccount.getPhoneNumber() + "\n");
         return false;
     }
 }

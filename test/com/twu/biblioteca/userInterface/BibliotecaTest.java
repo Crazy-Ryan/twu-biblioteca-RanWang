@@ -161,4 +161,24 @@ public class BibliotecaTest {
         biblioteca.listMovieHandler();
         assertEquals(expectedOutput, outContent.toString());
     }
+
+    @Test
+    public void viewProfileHandlerTest() {
+        String expectedOutput = "Please enter your user number (xxx-xxxx):\n" +
+                "Please enter your password:\n" +
+                "Login successfully. Welcome!\n" +
+                "Your profile is as below:\n" +
+                "Number: 1234567\n" +
+                "Name: Jack\n" +
+                "Email: jack@tw.com\n" +
+                "Phone number: +86-111\n";
+        String str = "123-4567\n" +
+                "password\n";
+        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
+        System.setIn(strIn);
+        biblioteca.userLogInHandler();
+        biblioteca.viewProfileHandler();
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
 }
