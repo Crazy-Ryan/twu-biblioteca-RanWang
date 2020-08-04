@@ -48,9 +48,7 @@ public class BibliotecaTest {
     @Test
     public void quitHandlerTest() {
         String expectedOutput = "";
-        String str = "9";
-        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
-        System.setIn(strIn);
+        setConsoleInputQueue("9");
         biblioteca.selectOptionOnMenu();
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -64,11 +62,9 @@ public class BibliotecaTest {
                 "Thank you! Enjoy the book\n" +
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n";
-        String str = "123-4567\n" +
+        setConsoleInputQueue( "123-4567\n" +
                 "password\n" +
-                "Gone With the Wind\n";
-        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
-        System.setIn(strIn);
+                "Gone With the Wind\n");
         biblioteca.userLogInHandler();
         biblioteca.checkOutBookHandler();
         biblioteca.listBookHandler();
@@ -85,11 +81,9 @@ public class BibliotecaTest {
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
                 "Gone With the Wind\t| Margaret Mitchell\t| 1936\n";
-        String str = "123-4567\n" +
+        setConsoleInputQueue("123-4567\n" +
                 "password\n" +
-                "Gone with the Wind\n";
-        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
-        System.setIn(strIn);
+                "Gone with the Wind\n");
         biblioteca.userLogInHandler();
         biblioteca.checkOutBookHandler();
         biblioteca.listBookHandler();
@@ -107,11 +101,9 @@ public class BibliotecaTest {
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
                 "Jane Eyre\t| Charlotte Brontë\t| 1847\n" +
                 "Gone With the Wind\t| Margaret Mitchell\t| 1936\n";
-        String str = "123-4567\n" +
+        setConsoleInputQueue("123-4567\n" +
                 "password\n" +
-                "Jane Eyre\n";
-        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
-        System.setIn(strIn);
+                "Jane Eyre\n");
         biblioteca.userLogInHandler();
         biblioteca.returnBookHandler();
         biblioteca.listBookHandler();
@@ -128,11 +120,9 @@ public class BibliotecaTest {
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
                 "Gone With the Wind\t| Margaret Mitchell\t| 1936\n";
-        String str = "123-4567\n" +
+        setConsoleInputQueue("123-4567\n" +
                 "password\n" +
-                "Gone with the Wind\n";
-        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
-        System.setIn(strIn);
+                "Gone with the Wind\n");
         biblioteca.userLogInHandler();
         biblioteca.returnBookHandler();
         biblioteca.listBookHandler();
@@ -154,9 +144,7 @@ public class BibliotecaTest {
                 "Thank you! Enjoy the movie\n" +
                 "Title\t| Year\t| Director\t| Rating\n" +
                 "The Godfather\t| 1972\t| Francis Ford Coppola\t| 9.2\n";
-        String str = "12 Angry Men\n";
-        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
-        System.setIn(strIn);
+        setConsoleInputQueue("12 Angry Men\n");
         biblioteca.checkoutMovieHandler();
         biblioteca.listMovieHandler();
         assertEquals(expectedOutput, outContent.toString());
@@ -172,13 +160,15 @@ public class BibliotecaTest {
                 "Name: Jack\n" +
                 "Email: jack@tw.com\n" +
                 "Phone number: +86-111\n";
-        String str = "123-4567\n" +
-                "password\n";
-        ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
-        System.setIn(strIn);
+        setConsoleInputQueue("123-4567\n" +
+                "password\n");
         biblioteca.userLogInHandler();
         biblioteca.viewProfileHandler();
         assertEquals(expectedOutput, outContent.toString());
     }
 
+    public void setConsoleInputQueue(String consoleInput) {
+        ByteArrayInputStream strIn = new ByteArrayInputStream(consoleInput.getBytes());
+        System.setIn(strIn);
+    }
 }
