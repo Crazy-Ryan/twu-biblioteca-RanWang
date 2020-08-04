@@ -57,13 +57,19 @@ public class BibliotecaTest {
 
     @Test
     public void successfullyCheckOutBookHandlerTest() {
-        String expectedOutput = "Please enter the title\n" +
+        String expectedOutput = "Please enter your user number (xxx-xxxx):\n" +
+                "Please enter your password:\n" +
+                "Login successfully. Welcome!\n" +
+                "Please enter the title\n" +
                 "Thank you! Enjoy the book\n" +
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n";
-        String str = "Gone With the Wind\n";
+        String str = "123-4567\n" +
+                "password\n" +
+                "Gone With the Wind\n";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);
+        biblioteca.userLogInHandler();
         biblioteca.checkOutBookHandler();
         biblioteca.listBookHandler();
         assertEquals(expectedOutput, outContent.toString());
@@ -71,14 +77,20 @@ public class BibliotecaTest {
 
     @Test
     public void unsuccessfullyCheckOutBookHandlerTest() {
-        String expectedOutput = "Please enter the title\n" +
+        String expectedOutput = "Please enter your user number (xxx-xxxx):\n" +
+                "Please enter your password:\n" +
+                "Login successfully. Welcome!\n" +
+                "Please enter the title\n" +
                 "Sorry, that book is not available\n" +
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
                 "Gone With the Wind\t| Margaret Mitchell\t| 1936\n";
-        String str = "Gone with the Wind\n";
+        String str = "123-4567\n" +
+                "password\n" +
+                "Gone with the Wind\n";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);
+        biblioteca.userLogInHandler();
         biblioteca.checkOutBookHandler();
         biblioteca.listBookHandler();
         assertEquals(expectedOutput, outContent.toString());
@@ -86,15 +98,21 @@ public class BibliotecaTest {
 
     @Test
     public void successfullyReturnBookHandlerTest() {
-        String expectedOutput = "Please enter the title\n" +
+        String expectedOutput = "Please enter your user number (xxx-xxxx):\n" +
+                "Please enter your password:\n" +
+                "Login successfully. Welcome!\n" +
+                "Please enter the title\n" +
                 "Thank you for returning the book\n" +
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
                 "Jane Eyre\t| Charlotte Brontë\t| 1847\n" +
                 "Gone With the Wind\t| Margaret Mitchell\t| 1936\n";
-        String str = "Jane Eyre\n";
+        String str = "123-4567\n" +
+                "password\n" +
+                "Jane Eyre\n";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);
+        biblioteca.userLogInHandler();
         biblioteca.returnBookHandler();
         biblioteca.listBookHandler();
         assertEquals(expectedOutput, outContent.toString());
@@ -102,14 +120,20 @@ public class BibliotecaTest {
 
     @Test
     public void unsuccessfullyReturnBookHandlerTest() {
-        String expectedOutput = "Please enter the title\n" +
+        String expectedOutput = "Please enter your user number (xxx-xxxx):\n" +
+                "Please enter your password:\n" +
+                "Login successfully. Welcome!\n" +
+                "Please enter the title\n" +
                 "That is not a valid book to return\n" +
                 "Title\t| Author\t| Publication Year\n" +
                 "Pride and Prejudice\t| Jane Austen\t| 1813\n" +
                 "Gone With the Wind\t| Margaret Mitchell\t| 1936\n";
-        String str = "Gone with the Wind\n";
+        String str = "123-4567\n" +
+                "password\n" +
+                "Gone with the Wind\n";
         ByteArrayInputStream strIn = new ByteArrayInputStream(str.getBytes());
         System.setIn(strIn);
+        biblioteca.userLogInHandler();
         biblioteca.returnBookHandler();
         biblioteca.listBookHandler();
         assertEquals(expectedOutput, outContent.toString());

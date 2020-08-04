@@ -2,6 +2,7 @@ package com.twu.biblioteca.userInterface;
 
 import com.twu.biblioteca.entity.Book;
 import com.twu.biblioteca.entity.Movie;
+import com.twu.biblioteca.service.AccountService;
 import com.twu.biblioteca.service.BookService;
 import com.twu.biblioteca.service.MovieService;
 
@@ -15,9 +16,14 @@ import java.util.function.Supplier;
 public class Biblioteca {
     private final BookService bookService = new BookService();
     private final MovieService movieService = new MovieService();
+    private final AccountService accountService = new AccountService();
+    private Scanner scanner;
+
     private Map<Option, Integer> OPTION_NUMBER_MAP;
     private Map<Integer, Option> NUMBER_OPTION_MAP;
     private Map<Option, Supplier<Boolean>> OPTION_HANDLER_MAP;
+    private boolean userLoggedIn = false;
+    private int userNumber = -1;
 
     public void run() {
         init();
@@ -34,6 +40,7 @@ public class Biblioteca {
         final Map<Integer, Option> numberOptionMap = new HashMap<>();
         final Map<Option, Supplier<Boolean>> optionHandlerMap = new HashMap<>();
 
+        optionNumberMap.put(Option.LOG_IN, 0);
         optionNumberMap.put(Option.LIST_BOOK, 1);
         optionNumberMap.put(Option.CHECKOUT_BOOK, 2);
         optionNumberMap.put(Option.RETURN_BOOK, 3);
@@ -45,6 +52,7 @@ public class Biblioteca {
             numberOptionMap.put(optionNumberMap.get(option), option);
         }
 
+        optionHandlerMap.put(Option.LOG_IN, this::userLogInHandler);
         optionHandlerMap.put(Option.LIST_BOOK, this::listBookHandler);
         optionHandlerMap.put(Option.CHECKOUT_BOOK, this::checkOutBookHandler);
         optionHandlerMap.put(Option.RETURN_BOOK, this::returnBookHandler);
@@ -63,6 +71,7 @@ public class Biblioteca {
 
     public void displayOptions() {
         System.out.print("Please select an option\n" +
+                OPTION_NUMBER_MAP.get(Option.LOG_IN) + ". Log in\n" +
                 OPTION_NUMBER_MAP.get(Option.LIST_BOOK) + ". List available books\n" +
                 OPTION_NUMBER_MAP.get(Option.CHECKOUT_BOOK) + ". Check out a book\n" +
                 OPTION_NUMBER_MAP.get(Option.RETURN_BOOK) + ". Return a book\n" +
@@ -72,11 +81,13 @@ public class Biblioteca {
     }
 
     public boolean selectOptionOnMenu() {
-        Scanner scanner = new Scanner(System.in);
+        if (scanner == null) {
+            scanner = new Scanner(System.in);
+        }
         int choice;
         try {
             choice = scanner.nextInt();
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return invalidOptionHandler();
         }
         Supplier<Boolean> optionHandler = OPTION_HANDLER_MAP.get(NUMBER_OPTION_MAP.get(choice));
@@ -97,8 +108,10 @@ public class Biblioteca {
     }
 
     public boolean checkOutBookHandler() {
-        String bookName = collectTitle();
-        if (bookService.checkOutABook(bookName)) {
+        checkLoginStatus();
+        System.out.print("Please enter the title\n");
+        String bookName = collectALine();
+        if (bookService.checkOutABook(bookName, userNumber)) {
             System.out.print("Thank you! Enjoy the book\n");
         } else {
             System.out.print("Sorry, that book is not available\n");
@@ -107,8 +120,10 @@ public class Biblioteca {
     }
 
     public boolean returnBookHandler() {
-        String bookName = collectTitle();
-        if (bookService.returnABook(bookName)) {
+        checkLoginStatus();
+        System.out.print("Please enter the title\n");
+        String bookName = collectALine();
+        if (bookService.returnABook(bookName, userNumber)) {
             System.out.print("Thank you for returning the book\n");
         } else {
             System.out.print("That is not a valid book to return\n");
@@ -120,13 +135,14 @@ public class Biblioteca {
         List<Movie> movies = movieService.getAvailableMovies();
         System.out.print("Title\t| Year\t| Director\t| Rating\n");
         for (Movie movie : movies) {
-            System.out.print(movie.getTitle() + "\t| " + movie.getReleaseYear() + "\t| " + movie.getDirector() +  "\t| " + movie.getRating() +"\n");
+            System.out.print(movie.getTitle() + "\t| " + movie.getReleaseYear() + "\t| " + movie.getDirector() + "\t| " + movie.getRating() + "\n");
         }
         return false;
     }
 
     public boolean checkoutMovieHandler() {
-        String movieName = collectTitle();
+        System.out.print("Please enter the title\n");
+        String movieName = collectALine();
         if (movieService.checkOutAMovie(movieName)) {
             System.out.print("Thank you! Enjoy the movie\n");
         } else {
@@ -144,11 +160,35 @@ public class Biblioteca {
         return false;
     }
 
-    public String collectTitle() {
-        System.out.print("Please enter the title\n");
-        Scanner scanner = new Scanner(System.in);
+    public String collectALine() {
+        if (scanner == null) {
+            scanner = new Scanner(System.in);
+        }
         return scanner.nextLine();
     }
 
+    public void checkLoginStatus() {
+        if (!userLoggedIn) {
+            System.out.print("--Please login for further operations--\n");
+            userLogInHandler();
+        }
+    }
 
+    public boolean userLogInHandler() {
+        int userNumberCollected;
+        do {
+            System.out.print("Please enter your user number (xxx-xxxx):\n");
+            String userNumberEntered = collectALine();
+            userNumberCollected = Integer.parseInt(userNumberEntered.replaceFirst("-", ""));
+            System.out.print("Please enter your password:\n");
+            String userPasswordEntered = collectALine();
+            userLoggedIn = accountService.userLogin(userNumberCollected, userPasswordEntered);
+            if (!userLoggedIn) {
+                System.out.print("Login failed. Please try again\n");
+            }
+        } while (!userLoggedIn);
+        System.out.print("Login successfully. Welcome!\n");
+        userNumber = userNumberCollected;
+        return false;
+    }
 }

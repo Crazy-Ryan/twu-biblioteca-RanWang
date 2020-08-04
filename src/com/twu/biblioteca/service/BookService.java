@@ -17,11 +17,11 @@ public class BookService {
         return bookRepo.getAvailableMedia();
     }
 
-    public boolean checkOutABook(String bookName) {
-        return bookRepo.checkoutMedium(bookName);
+    public boolean checkOutABook(String bookName, int userNumber) {
+        return bookRepo.checkoutMedium(bookName, userNumber);
     }
 
-    public boolean returnABook(String bookName) {
-        return bookRepo.returnMedium(bookName);
+    public boolean returnABook(String bookName, int userNumber) {
+        return bookRepo.returnMedium(bookName, userNumber);
     }
 }

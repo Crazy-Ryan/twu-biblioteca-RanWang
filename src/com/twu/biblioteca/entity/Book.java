@@ -3,11 +3,13 @@ package com.twu.biblioteca.entity;
 public class Book extends Medium{
     private String author;
     private int publicationYear;
+    private int userNumber;
 
-    public Book(int id, String title, String author, int publicationYear, boolean available) {
+    public Book(int id, String title, String author, int publicationYear, boolean available, int userNumber) {
         super(id, title, available);
         this.author = author;
         this.publicationYear = publicationYear;
+        this.userNumber = userNumber;
     }
 
     public String getAuthor() {
@@ -24,6 +26,14 @@ public class Book extends Medium{
 
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
+    }
+
+    public int getUserNumber() {
+        return userNumber;
+    }
+
+    public void setUserNumber(int userNumber) {
+        this.userNumber = userNumber;
     }
 
     @Override

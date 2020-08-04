@@ -12,9 +12,9 @@ public class BookRepo implements MediumRepo<Book> {
 
     public BookRepo() {
         books = new ArrayList(Arrays.asList(
-                new Book(1, "Pride and Prejudice", "Jane Austen", 1813, true),
-                new Book(2, "Jane Eyre", "Charlotte Brontë", 1847, false),
-                new Book(3, "Gone With the Wind", "Margaret Mitchell", 1936, true)
+                new Book(1, "Pride and Prejudice", "Jane Austen", 1813, true, -1),
+                new Book(2, "Jane Eyre", "Charlotte Brontë", 1847, false, 1234567),
+                new Book(3, "Gone With the Wind", "Margaret Mitchell", 1936, true, -1)
         ));
     }
 
@@ -39,11 +39,33 @@ public class BookRepo implements MediumRepo<Book> {
         return false;
     }
 
+    public boolean checkoutMedium(String bookName, int userNumber) {
+        for (Book book : books) {
+            if ((book.isAvailable()) && (book.getTitle().equals(bookName))) {
+                book.setAvailable(false);
+                book.setUserNumber(userNumber);
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean returnMedium(String bookName) {
         for (Book book : books) {
             if ((!book.isAvailable()) && (book.getTitle().equals(bookName))) {
                 book.setAvailable(true);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean returnMedium(String bookName, int userNumber) {
+        for (Book book : books) {
+            if ((!book.isAvailable()) && (book.getTitle().equals(bookName)) && book.getUserNumber() == userNumber) {
+                book.setAvailable(true);
+                book.setUserNumber(-1);
                 return true;
             }
         }
