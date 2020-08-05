@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.function.Supplier;
 
 public class Biblioteca {
     private final BookService bookService = new BookService();
@@ -22,24 +21,24 @@ public class Biblioteca {
 
     private Map<Option, Integer> OPTION_NUMBER_MAP;
     private Map<Integer, Option> NUMBER_OPTION_MAP;
-    private Map<Option, Supplier<Boolean>> OPTION_HANDLER_MAP;
+    private Map<Option, OperationHandler> OPTION_HANDLER_MAP;
+    boolean exitAfterOptionHandling = false;
     private boolean userLoggedIn = false;
     private Account userAccount;
 
     public void run() {
         init();
         greet();
-        boolean exitAfterOptionHanding = false;
-        while (!exitAfterOptionHanding) {
+        while (!exitAfterOptionHandling) {
             displayOptions();
-            exitAfterOptionHanding = selectOptionOnMenu();
+            selectOptionOnMenu();
         }
     }
 
     public void init() {
         final Map<Option, Integer> optionNumberMap = new HashMap<>();
         final Map<Integer, Option> numberOptionMap = new HashMap<>();
-        final Map<Option, Supplier<Boolean>> optionHandlerMap = new HashMap<>();
+        final Map<Option, OperationHandler> optionHandlerMap = new HashMap<>();
 
         optionNumberMap.put(Option.LOG_IN, 0);
         optionNumberMap.put(Option.LIST_BOOK, 1);
@@ -84,7 +83,7 @@ public class Biblioteca {
                 OPTION_NUMBER_MAP.get(Option.QUIT) + ". Quit\n");
     }
 
-    public boolean selectOptionOnMenu() {
+    public void selectOptionOnMenu() {
         if (scanner == null) {
             scanner = new Scanner(System.in);
         }
@@ -92,26 +91,25 @@ public class Biblioteca {
         try {
             choice = scanner.nextInt();
         } catch (RuntimeException e) {
-            return invalidOptionHandler();
+            invalidOptionHandler();
+            return;
         }
-        Supplier<Boolean> optionHandler = OPTION_HANDLER_MAP.get(NUMBER_OPTION_MAP.get(choice));
+        OperationHandler optionHandler = OPTION_HANDLER_MAP.get(NUMBER_OPTION_MAP.get(choice));
         if (null == optionHandler) {
             optionHandler = this::invalidOptionHandler;
         }
-        return optionHandler.get();
+        optionHandler.run();
     }
 
-    public boolean listBookHandler() {
+    public void listBookHandler() {
         List<Book> bookData = bookService.getAvailableBooks();
         System.out.print("Title\t| Author\t| Publication Year\n");
         for (Book book : bookData) {
             System.out.print(book.getTitle() + "\t| " + book.getAuthor() + "\t| " + book.getPublicationYear() + "\n");
         }
-        return false;
-
     }
 
-    public boolean checkOutBookHandler() {
+    public void checkOutBookHandler() {
         checkLoginStatus();
         System.out.print("Please enter the title\n");
         String bookName = collectALine();
@@ -120,10 +118,9 @@ public class Biblioteca {
         } else {
             System.out.print("Sorry, that book is not available\n");
         }
-        return false;
     }
 
-    public boolean returnBookHandler() {
+    public void returnBookHandler() {
         checkLoginStatus();
         System.out.print("Please enter the title\n");
         String bookName = collectALine();
@@ -132,19 +129,17 @@ public class Biblioteca {
         } else {
             System.out.print("That is not a valid book to return\n");
         }
-        return false;
     }
 
-    public boolean listMovieHandler() {
+    public void listMovieHandler() {
         List<Movie> movies = movieService.getAvailableMovies();
         System.out.print("Title\t| Year\t| Director\t| Rating\n");
         for (Movie movie : movies) {
             System.out.print(movie.getTitle() + "\t| " + movie.getReleaseYear() + "\t| " + movie.getDirector() + "\t| " + movie.getRating() + "\n");
         }
-        return false;
     }
 
-    public boolean checkoutMovieHandler() {
+    public void checkoutMovieHandler() {
         System.out.print("Please enter the title\n");
         String movieName = collectALine();
         if (movieService.checkOutAMovie(movieName)) {
@@ -152,16 +147,14 @@ public class Biblioteca {
         } else {
             System.out.print("Sorry, that movie is not available\n");
         }
-        return false;
     }
 
-    public boolean quitHandler() {
-        return true;
+    public void quitHandler() {
+        exitAfterOptionHandling = true;
     }
 
-    public boolean invalidOptionHandler() {
+    public void invalidOptionHandler() {
         System.out.print("Please select a valid option!\n");
-        return false;
     }
 
     public String collectALine() {
@@ -179,7 +172,7 @@ public class Biblioteca {
         }
     }
 
-    public boolean userLogInHandler() {
+    public void userLogInHandler() {
         int userNumberCollected;
         Account accountReceived;
         do {
@@ -197,16 +190,14 @@ public class Biblioteca {
             }
             System.out.print("Login failed. Please try again\n");
         } while (true);
-        return false;
     }
 
-    public boolean viewProfileHandler() {
+    public void viewProfileHandler() {
         checkLoginStatus();
         System.out.print("Your profile is as below:\n" +
                 "Number: " + userAccount.getNumber() + "\n" +
                 "Name: " + userAccount.getName() + "\n" +
                 "Email: " + userAccount.getEmail() + "\n" +
                 "Phone number: " + userAccount.getPhoneNumber() + "\n");
-        return false;
     }
 }
